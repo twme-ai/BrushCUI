@@ -85,7 +85,7 @@ show for unknown brushes, throttle limits and colours (`line`, `grid`, `center`,
 mvn package                      # target/BrushCUI-<version>.jar, runs unit tests
 integration/run-e2e.sh           # Paper + WorldEdit + WorldEditDisplay + mineflayer bots
 BRUSHCUI_E2E_EDITOR=fawe integration/run-e2e.sh
-BRUSHCUI_E2E_WED_JAR=/path/to/WorldEditDisplay.jar BRUSHCUI_E2E_EXPECT_OUTLINE=1 integration/run-e2e.sh
+BRUSHCUI_E2E_WED_JAR=/path/to/WorldEditDisplay-2.8.1.jar BRUSHCUI_E2E_EXPECT_OUTLINE=0 integration/run-e2e.sh
 ```
 
 ---
@@ -157,5 +157,5 @@ BRUSHCUI_E2E_WED_JAR=/path/to/WorldEditDisplay.jar BRUSHCUI_E2E_EXPECT_OUTLINE=1
 mvn package                      # target/BrushCUI-<version>.jar，會跑單元測試
 integration/run-e2e.sh           # Paper + WorldEdit + WorldEditDisplay + mineflayer 機器人
 BRUSHCUI_E2E_EDITOR=fawe integration/run-e2e.sh
-BRUSHCUI_E2E_WED_JAR=/path/to/WorldEditDisplay.jar BRUSHCUI_E2E_EXPECT_OUTLINE=1 integration/run-e2e.sh
+BRUSHCUI_E2E_WED_JAR=/path/to/WorldEditDisplay-2.8.1.jar BRUSHCUI_E2E_EXPECT_OUTLINE=0 integration/run-e2e.sh
 ```

@@ -2,8 +2,8 @@
 # End-to-end test: Paper + WorldEdit/FAWE + WorldEditDisplay + BrushCUI, driven by mineflayer.
 #
 #   BRUSHCUI_E2E_EDITOR   worldedit (default) | fawe
-#   BRUSHCUI_E2E_WED_JAR  WorldEditDisplay jar to test with (default: release 2.8.1)
-#   BRUSHCUI_E2E_EXPECT_OUTLINE  1 if that WorldEditDisplay supports the +wed|outline hint (2.9.0+)
+#   BRUSHCUI_E2E_WED_JAR  WorldEditDisplay jar to test with (default: release 2.9.0)
+#   BRUSHCUI_E2E_EXPECT_OUTLINE  1 (default) checks the +wed|outline rendering; 0 for WorldEditDisplay before 2.9.0
 set -euo pipefail
 
 readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -15,7 +15,7 @@ readonly WORLDEDIT_URL="https://cdn.modrinth.com/data/1u6JkXh5/versions/F5ea2ov3
 readonly WORLDEDIT_SHA256="e5696a6d064b9969437a8888be91b0941148a28e0c3736de1554a00254a5d142"
 readonly FAWE_URL="https://cdn.modrinth.com/data/z4HZZnLr/versions/A1gBu4MM/FastAsyncWorldEdit-Paper-2.16.1.jar"
 readonly FAWE_SHA256="a1706c41412a108e3d2fdbd9e9dd0c60904f2ba45414c6edf11c1262812e1838"
-readonly WED_URL="https://github.com/TWME-TW/WorldEditDisplay/releases/download/v2.8.1/WorldEditDisplay-2.8.1-paper.jar"
+readonly WED_URL="https://github.com/TWME-TW/WorldEditDisplay/releases/download/v2.9.0/WorldEditDisplay-2.9.0-paper.jar"
 readonly CACHE_DIR="${PROJECT_DIR}/.e2e-cache"
 readonly PORT="${BRUSHCUI_E2E_PORT:-$(node -e 'const s=require("net").createServer();s.listen(0,"127.0.0.1",()=>{console.log(s.address().port);s.close()})')}"
 readonly TEMP_DIR="$(mktemp -d)"
@@ -58,7 +58,7 @@ case "${EDITOR}" in
 esac
 wed_jar="${BRUSHCUI_E2E_WED_JAR:-}"
 if [[ -z "${wed_jar}" ]]; then
-  wed_jar="${CACHE_DIR}/WorldEditDisplay-2.8.1-paper.jar"
+  wed_jar="${CACHE_DIR}/WorldEditDisplay-2.9.0-paper.jar"
   [[ -f "${wed_jar}" ]] || curl --fail --silent --show-error --location "${WED_URL}" --output "${wed_jar}"
 fi
 
@@ -112,7 +112,7 @@ done
 npm ci --prefix "${PROJECT_DIR}/integration/mineflayer" --silent 2>/dev/null \
   || npm install --prefix "${PROJECT_DIR}/integration/mineflayer" --silent
 if ! BRUSHCUI_E2E_PORT="${PORT}" BRUSHCUI_E2E_EDITOR="${EDITOR}" \
-    BRUSHCUI_E2E_EXPECT_OUTLINE="${BRUSHCUI_E2E_EXPECT_OUTLINE:-0}" node "${PROJECT_DIR}/integration/mineflayer/test.mjs"; then
+    BRUSHCUI_E2E_EXPECT_OUTLINE="${BRUSHCUI_E2E_EXPECT_OUTLINE:-1}" node "${PROJECT_DIR}/integration/mineflayer/test.mjs"; then
   tail -200 "${SERVER_DIR}/server.log" >&2
   exit 1
 fi
