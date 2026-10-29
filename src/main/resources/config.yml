@@ -1,0 +1,56 @@
+# BrushCUI
+#
+# Sends the space your WorldEdit brush would affect, at the block you are looking at, as a
+# WorldEditCUI multi-region. It is rendered by the WorldEditCUI client mod, or by the
+# WorldEditDisplay server plugin for players without the mod. Nothing is sent to players who
+# have neither.
+#
+# 以 WorldEditCUI 多選區訊息送出手上筆刷在準星位置的作用範圍，由 WorldEditCUI 模組或
+# WorldEditDisplay 插件渲染；兩者都沒有的玩家不會收到任何訊息。
+
+# Whether the preview is on for players who never ran /brushcui on|off.
+# 玩家沒有自行切換過時，預覽是否開啟。
+default-enabled: true
+
+# follow: update while the crosshair moves (rate limited).
+# settle: wait until the target block stops moving.
+# follow：準星移動時持續更新（有節流）；settle：目標停下後才更新。
+default-mode: follow
+
+# How often each player's brush and target are checked, in ticks.
+# 每位玩家檢查筆刷與目標的間隔（tick）。
+poll-interval-ticks: 2
+
+# Delay before re-sending after the client's CUI handshake (world change, respawn).
+# 客戶端重新握手（換世界、重生）後，延遲多久重送（tick）。
+resend-delay-ticks: 5
+
+# Brushes BrushCUI does not know (many FAWE brushes): sphere = a sphere of the brush size,
+# none = no preview.
+# 未知筆刷（多數 FAWE 筆刷）：sphere = 以筆刷大小畫球；none = 不顯示。
+unknown-brushes: sphere
+
+throttle:
+  # Minimum ticks between two updates. Keep >= 4 so WorldEditDisplay (2 tick debounce) can draw.
+  # 兩次更新的最小間隔；請保持 >= 4，讓 WorldEditDisplay 的 2 tick 防抖有空檔渲染。
+  min-send-interval-ticks: 4
+  # settle mode: ticks the target must stay still.
+  # settle 模式：目標需靜止多少 tick。
+  settle-ticks: 6
+  # Hard cap of CUI messages per player per second (minimum 5).
+  # 每位玩家每秒 CUI 訊息上限（最少 5）。
+  max-messages-per-second: 40
+
+# Colours are #RRGGBB or #RRGGBBAA. A colour with alpha 00 hides that part.
+# 顏色格式 #RRGGBB 或 #RRGGBBAA；alpha 為 00 表示隱藏。
+style:
+  # Outline of the brush shape. 筆刷範圍外框。
+  line: "#FFAA00FF"
+  # Grid lines WorldEditCUI draws on cylinders (WorldEditDisplay draws outlines only).
+  # WorldEditCUI 在圓柱上畫的網格線（WorldEditDisplay 只畫外框）。
+  grid: "#FFAA0060"
+  # Marker on the targeted block (spheres and cylinders). 目標方塊標記（球與圓柱）。
+  center: "#FFFFFFFF"
+  # Translucent surface, drawn by WorldEditDisplay when the player has fill enabled.
+  # 半透明填充面，玩家在 WorldEditDisplay 開啟填充時才會畫。
+  fill: "#00000000"

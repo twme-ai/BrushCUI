@@ -1,0 +1,24 @@
+name: BrushCUI
+version: '${project.version}'
+main: dev.twme.brushcui.BrushCUI
+api-version: '1.21'
+folia-supported: true
+description: Preview the space your WorldEdit brush would affect, rendered by WorldEditCUI or WorldEditDisplay.
+author: TWME
+website: https://github.com/twme-ai/BrushCUI
+# FastAsyncWorldEdit provides "WorldEdit".
+depend: [WorldEdit]
+softdepend: [FastAsyncWorldEdit, WorldEditDisplay]
+commands:
+  brushcui:
+    description: Toggle and configure your brush preview.
+    usage: /<command> [on|off|toggle|mode <follow|settle>|status|reload]
+    aliases: [brushpreview]
+    permission: brushcui.use
+permissions:
+  brushcui.use:
+    description: Show the brush preview and use /brushcui.
+    default: true
+  brushcui.reload:
+    description: Reload BrushCUI's configuration.
+    default: op
